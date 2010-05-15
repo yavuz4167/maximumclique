@@ -1,14 +1,12 @@
 package test.bartek;
 
 import java.io.File;
-
-import org.apache.commons.collections15.Factory;
+import java.util.Collection;
 
 import edu.uci.ics.jung.graph.Graph;
 import edu.uci.ics.jung.graph.SparseMultigraph;
-import edu.uci.ics.jung.graph.UndirectedSparseGraph;
-import edu.uci.ics.jung.io.MatrixFile;
-import graph.io.NodeFactory;
+import graph.algorithm.MaximumClique;
+import graph.io.UndirectedGraphReader;
 import graph.util.Edge;
 import graph.util.Node;
 
@@ -39,31 +37,30 @@ public class testing {
 		Object node = new Node(3);
 		System.out.println(node.toString());
 
-		final Factory<Node> nodeFactory = new Factory<Node>() {
+		// final Factory<Node> nodeFactory = new Factory<Node>() {
+		//
+		// @Override
+		// public Node create() {
+		// // TODO Auto-generated method stub
+		// return new Node(1);
+		// }
+		// };
+		// MatrixFile mf = new MatrixFile<Node, Edge>(null, new
+		// Factory<UndirectedSparseGraph<Node, Edge>>() {
+		//
+		// @Override
+		// public UndirectedSparseGraph<Node, Edge> create() {
+		// return new UndirectedSparseGraph<Node, Edge>();
+		// }
+		// }, new NodeFactory(), new EgdeFactory());
+		// Graph<Node, Edge> g1 = mf.load("graphs//g1.txt");
 
-			@Override
-			public Node create() {
-				// TODO Auto-generated method stub
-				return new Node(1);
-			}
-		};
-		MatrixFile mf = new MatrixFile<Node, Edge>(null, new Factory<UndirectedSparseGraph<Node, Edge>>() {
-
-			@Override
-			public UndirectedSparseGraph<Node, Edge> create() {
-				return new UndirectedSparseGraph<Node, Edge>();
-			}
-		}, new NodeFactory(), new Factory<Edge>() {
-
-			@Override
-			public Edge create() {
-				// TODO Auto-generated method stub
-				return new Edge();
-			}
-		});
-		UndirectedSparseGraph<Node, Edge> g1 = (UndirectedSparseGraph<Node, Edge>) mf.load("graphs//g1.txt");
+		UndirectedGraphReader reader = new UndirectedGraphReader();
+		Graph<Node, Edge> g1 = reader.load("graphs//g1.txt");
 
 		System.out.println("The graph g1 = " + g1.toString());
-
+		MaximumClique<Node, Edge> maximumClique = new MaximumClique<Node, Edge>(g1);
+		Collection<Node> clique = maximumClique.getClique();
+		System.out.println("Nawiększa klika to: " + ((clique == null) ? "Brak" : clique.toString()));
 	}
 }

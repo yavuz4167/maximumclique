@@ -17,6 +17,11 @@ public class Edge {
 		this.id = id;
 	}
 
+	public Edge(int id) {
+		super();
+		this.id = id;
+	}
+
 	@Override
 	public String toString() {
 		return "E" + id;

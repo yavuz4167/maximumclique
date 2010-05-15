@@ -1,11 +1,11 @@
-package graph.io;
+package graph.io.utils;
 
 import graph.util.Node;
 
 import org.apache.commons.collections15.Factory;
 
 public class NodeFactory implements Factory<Node> {
-	int i = 1;
+	private int i = 1;
 
 	public NodeFactory() {
 		i = 1;
@@ -13,6 +13,7 @@ public class NodeFactory implements Factory<Node> {
 
 	@Override
 	public Node create() {
+		System.out.println("Create Node i=" + i);
 		return new Node(i++);
 	}
 }
