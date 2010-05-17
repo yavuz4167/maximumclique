@@ -2,6 +2,7 @@ package test.bartek;
 
 import java.io.File;
 import java.util.Collection;
+import java.util.List;
 
 import edu.uci.ics.jung.graph.Graph;
 import edu.uci.ics.jung.graph.SparseMultigraph;
@@ -56,11 +57,13 @@ public class testing {
 		// Graph<Node, Edge> g1 = mf.load("graphs//g1.txt");
 
 		UndirectedGraphReader reader = new UndirectedGraphReader();
-		Graph<Node, Edge> g1 = reader.load("graphs//g1.txt");
+		Graph<Node, Edge> g1 = reader.load("graphs//example_n450_k30.txt");
 
 		System.out.println("The graph g1 = " + g1.toString());
 		MaximumClique<Node, Edge> maximumClique = new MaximumClique<Node, Edge>(g1);
-		Collection<Node> clique = maximumClique.getClique();
-		System.out.println("Nawiększa klika to: " + ((clique == null) ? "Brak" : clique.toString()));
+		List<Collection<Node>> clique = maximumClique.getCliques();
+		for (Collection<Node> collection : clique) {
+			System.out.println("Nawiększa klika to: (" + collection.size() + ") " + collection.toString());
+		}
 	}
 }

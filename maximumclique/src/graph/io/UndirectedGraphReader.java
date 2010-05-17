@@ -8,6 +8,11 @@ import graph.io.utils.UndirectedGraphFactory;
 import graph.util.Edge;
 import graph.util.Node;
 
+/**
+ * 
+ * @author bbarczynski
+ * 
+ */
 public class UndirectedGraphReader extends MatrixFile<Node, Edge> {
 	public UndirectedGraphReader() {
 		super(null, new UndirectedGraphFactory(), new NodeFactory(), new EdgeFactory());

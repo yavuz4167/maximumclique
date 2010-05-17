@@ -6,8 +6,6 @@ import edu.uci.ics.jung.graph.UndirectedSparseGraph;
 import graph.util.Edge;
 import graph.util.Node;
 
-// TODO [bbarczynski] 
-
 public class UndirectedGraphFactory implements Factory<UndirectedSparseGraph<Node, Edge>> {
 
 	@Override
