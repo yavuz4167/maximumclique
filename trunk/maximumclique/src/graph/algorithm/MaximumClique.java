@@ -1,83 +1,119 @@
 package graph.algorithm;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import edu.uci.ics.jung.graph.Graph;
 
 /**
+ * Algorytm wyszukiwania najwiekszej kliki w grafie.
  * 
  * @author bbarczynski
  * 
  * @param <V>
+ *            wiezchołki
  * @param <E>
+ *            krawędzie
  */
 public class MaximumClique<V, E> {
+	/**
+	 * Analizowany graf
+	 */
 	private Graph<V, E> graph;
-	private Map<Integer, V> nodeMap;
 
+	/**
+	 * Lista wierzchołków. Jest niezbędna aby pobierać poszczególne wierzchołki
+	 * po indexie. Graph#getVertices() zwraca kolekcję, po której można się
+	 * jedynie iterować, a nie jest możliwe pobranie elementu z wybranego
+	 * indexu.
+	 */
+	private ArrayList<V> nodes;
+
+	/**
+	 * Lista znalezionych maksymalnych (nie koniecznie najwiekszych) klik
+	 */
 	private List<Set<V>> maximalCliques;
 
+	/**
+	 * Czas trwania algorytmu. Sumowa są czynności przygotowawcze (wykonane w
+	 * kostruktorze) oraz czas wykonania samego algorytmu
+	 */
+	private long algorithmDuration;
+
+	/**
+	 * 
+	 * @param graph
+	 *            graf, w ktorym bedzie wyznaczana najwieksza klika
+	 */
 	public MaximumClique(Graph<V, E> graph) {
+		long start = System.currentTimeMillis();
+		algorithmDuration = 0;
 		this.graph = graph;
 		maximalCliques = new LinkedList<Set<V>>();
 		// index nodes for fast searching
-		Collection<V> vertices = graph.getVertices();
-		nodeMap = new HashMap<Integer, V>(graph.getVertexCount());
-		Integer i = 1;
-		for (V v : vertices) {
-			nodeMap.put(i++, v);
-		}
+		nodes = new ArrayList<V>(graph.getVertices());
+		algorithmDuration += (System.currentTimeMillis() - start);
 	}
 
 	public List<Set<V>> getCliques() {
+		long start = System.currentTimeMillis();
 		maximalCliques.clear();
 		TIAS(new HashSet<V>(), 1);
-		sortMaximalCliques();
-		printAllMaximalCliques();
-		removeNoMaximumCliques();
+		findMaximumCliques();
+		algorithmDuration += (System.currentTimeMillis() - start);
 		return maximalCliques;
+	}
+
+	public long getAlgorithmDuration() {
+		return algorithmDuration;
 	}
 
 	private void TIAS(HashSet<V> maximalClique, Integer nodeIndex) {
 
 		if (nodeIndex > graph.getVertexCount()) {
-			System.out.println("!!! Znaleziono masymalna kilke : " + printClique(maximalClique));
+			// System.out.println("!!! Znaleziono masymalna kilke : " +
+			// printClique(maximalClique));
 			// TODO [bbarczynski] sprawdzenie czy dodajemy druga taka sama klike
 			// maksylana
 			maximalCliques.add(maximalClique);
 			return;
 		}
-		V node = nodeMap.get(nodeIndex);
-		System.out.println(getPrefix(node) + "maximalClique=" + maximalClique.toString());
+		V node = nodes.get(nodeIndex - 1);
+		// System.out.println(getPrefix(node) + "maximalClique=" +
+		// maximalClique.toString());
 		Collection<V> neighbors = graph.getNeighbors(node);
 		if (neighbors.containsAll(maximalClique)) {
-			System.out.println(getPrefix(node) + "maximalClique zawiera sie w neighbors");
+			// System.out.println(getPrefix(node) + "maximalClique zawiera sie w
+			// neighbors");
 			TIAS(cloneSetAndAddNode(maximalClique, node), nodeIndex + 1);
 		} else {
-			System.out.println(getPrefix(node) + "maximalClique - brak zawierania");
+			// System.out.println(getPrefix(node) + "maximalClique - brak
+			// zawierania");
 			TIAS(cloneSet(maximalClique), nodeIndex + 1);
 
-			System.out.println(getPrefix(node) + "maximalClique=" + maximalClique);
-			System.out.println(getPrefix(node) + "neighbors=" + neighbors);
+			// System.out.println(getPrefix(node) + "maximalClique=" +
+			// maximalClique);
+			// System.out.println(getPrefix(node) + "neighbors=" + neighbors);
 			HashSet<V> intersection = getIntersection(neighbors, maximalClique);
-			System.out.println(getPrefix(node) + "intersection=" + intersection);
+			// System.out.println(getPrefix(node) + "intersection=" +
+			// intersection);
 
 			Collection<V> lexiClique = getLexicographicallySmallestMaximalClique(intersection, nodeIndex - 1);
-			System.out.println(getPrefix(node) + "lexiClique=" + lexiClique);
+			// System.out.println(getPrefix(node) + "lexiClique=" + lexiClique);
 			if (maximalClique.equals(lexiClique)) {
-				System.out.println(getPrefix(node)
-						+ "lexiClique jest rowne maximalClique. Rekurencja zostaje rozdwojona.");
+				// System.out.println(getPrefix(node)
+				// + "lexiClique jest rowne maximalClique. Rekurencja zostaje
+				// rozdwojona.");
 				TIAS(cloneSetAndAddNode(intersection, node), nodeIndex + 1);
 			} else {
-				System.out.println(getPrefix(node) + "lexiClique jest rozne od maximalClique ");
+				// System.out.println(getPrefix(node) + "lexiClique jest rozne
+				// od maximalClique ");
 			}
 
 		}
@@ -135,7 +171,7 @@ public class MaximumClique<V, E> {
 	private HashSet<V> getLexicographicallySmallestMaximalClique(Collection<V> clique, Integer maxIndex) {
 		HashSet<V> lexiClique = cloneSet(clique);
 		for (int i = 1; i <= maxIndex; ++i) {
-			V node = nodeMap.get(i);
+			V node = nodes.get(i);
 			Collection<V> neighbors = graph.getNeighbors(node);
 			// mozna dolaczyc nowy wierzcholek gdy sasiedzi Vi zawieraja
 			// wszystkie wierzcholki z kliki. Czyli po dolaczenieu Vi ciagle
@@ -150,8 +186,7 @@ public class MaximumClique<V, E> {
 		return node.toString() + ": ";
 	}
 
-	private void printAllMaximalCliques() {
-		System.out.println("Kliki maksymalne:");
+	public void printAllCliques() {
 		for (Collection<V> element : maximalCliques) {
 			System.out.println(printClique(element));
 		}
@@ -159,6 +194,12 @@ public class MaximumClique<V, E> {
 
 	public String printClique(Collection<V> clique) {
 		return "(" + clique.size() + ")" + clique.toString();
+	}
+
+	private void findMaximumCliques() {
+		sortMaximalCliques();
+		// printAllCliques();
+		removeNoMaximumCliques();
 	}
 
 	private void sortMaximalCliques() {
@@ -178,4 +219,5 @@ public class MaximumClique<V, E> {
 				maximalCliques.remove(i);
 		}
 	}
+
 }
