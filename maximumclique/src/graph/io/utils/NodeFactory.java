@@ -13,7 +13,7 @@ public class NodeFactory implements Factory<Node> {
 
 	@Override
 	public Node create() {
-		System.out.println("Create Node i=" + i);
+		// System.out.println("Create Node i=" + i);
 		return new Node(i++);
 	}
 }
