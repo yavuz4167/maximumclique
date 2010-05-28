@@ -1,5 +1,6 @@
 package graph.algorithm;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -44,7 +45,7 @@ public class MaximumClique<V, E> {
 	 * Czas trwania algorytmu. Sumowa są czynności przygotowawcze (wykonane w
 	 * kostruktorze) oraz czas wykonania samego algorytmu
 	 */
-	private long algorithmDuration;
+	private BigInteger algorithmDuration;
 	
 	/**
 	 * Zmienna na przerwanie oblicze�
@@ -57,25 +58,26 @@ public class MaximumClique<V, E> {
 	 *            graf, w ktorym bedzie wyznaczana najwieksza klika
 	 */
 	public MaximumClique(Graph<V, E> graph) {
-		long start = System.currentTimeMillis();
-		algorithmDuration = 0;
+		BigInteger start = BigInteger.valueOf(System.nanoTime());
+		algorithmDuration = BigInteger.valueOf(0);
 		this.graph = graph;
 		maximalCliques = new LinkedList<Set<V>>();
 		// index nodes for fast searching
 		nodes = new ArrayList<V>(graph.getVertices());
-		algorithmDuration += (System.currentTimeMillis() - start);
+		algorithmDuration = algorithmDuration.add(BigInteger.valueOf(System.nanoTime()).subtract(start));
+		System.out.println(algorithmDuration);
 	}
 
 	public List<Set<V>> getCliques() {
-		long start = System.currentTimeMillis();
+		BigInteger start = BigInteger.valueOf(System.nanoTime());
 		maximalCliques.clear();
 		TIAS(new HashSet<V>(), 1);
 		findMaximumCliques();
-		algorithmDuration += (System.currentTimeMillis() - start);
+		algorithmDuration = algorithmDuration.add(BigInteger.valueOf(System.nanoTime()).subtract(start));
 		return maximalCliques;
 	}
 
-	public long getAlgorithmDuration() {
+	public BigInteger getAlgorithmDuration() {
 		return algorithmDuration;
 	}
 	
