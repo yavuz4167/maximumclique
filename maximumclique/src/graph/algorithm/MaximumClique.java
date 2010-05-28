@@ -65,7 +65,6 @@ public class MaximumClique<V, E> {
 		// index nodes for fast searching
 		nodes = new ArrayList<V>(graph.getVertices());
 		algorithmDuration = algorithmDuration.add(BigInteger.valueOf(System.nanoTime()).subtract(start));
-		System.out.println(algorithmDuration);
 	}
 
 	public List<Set<V>> getCliques() {
