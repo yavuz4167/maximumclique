@@ -1,5 +1,6 @@
 package graph.test;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 
 import edu.uci.ics.jung.algorithms.generators.GraphGenerator;
@@ -45,7 +46,7 @@ public class RandomTester {
 	/**
 	 * Czasy wykonania poszczególnych iteracji uruchomienia algorytmu
 	 */
-	private ArrayList<Long> times;
+	private ArrayList<BigInteger> times;
 
 	/**
 	 * 
@@ -65,7 +66,7 @@ public class RandomTester {
 
 		generator = new ErdosRenyiGenerator<Node, Edge>(new UndirectedGraphFactory(), new NodeFactory(),
 				new EdgeFactory(), numVertices, probability);
-		times = new ArrayList<Long>(numIteration);
+		times = new ArrayList<BigInteger>(numIteration);
 
 	}
 
@@ -93,14 +94,13 @@ public class RandomTester {
 	 * @return sredni czas wykonania algorytmu (dla jedngo grafu)
 	 */
 	public double getAverageTime() {
-		Long sum = new Long(0);
+		BigInteger sum = BigInteger.ZERO;
 		double everage = 0;
-
-		for (Long singleTime : times) {
-			sum += singleTime;
+		for (BigInteger singleTime : times) {
+			sum = sum.add(singleTime);
 		}
 		if (numIteration > 0)
-			everage = sum / numIteration;
+			everage = sum.divide(BigInteger.valueOf(numIteration)).doubleValue();
 		return everage;
 	}
 
