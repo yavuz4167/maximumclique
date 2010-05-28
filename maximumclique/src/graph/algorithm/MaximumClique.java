@@ -45,7 +45,12 @@ public class MaximumClique<V, E> {
 	 * kostruktorze) oraz czas wykonania samego algorytmu
 	 */
 	private long algorithmDuration;
-
+	
+	/**
+	 * Zmienna na przerwanie obliczeñ
+	 */
+	private static boolean isRunning = true;
+	
 	/**
 	 * 
 	 * @param graph
@@ -73,10 +78,14 @@ public class MaximumClique<V, E> {
 	public long getAlgorithmDuration() {
 		return algorithmDuration;
 	}
+	
+	public static void setRunning(boolean b) {
+		isRunning = b;
+	}
 
 	private void TIAS(HashSet<V> maximalClique, Integer nodeIndex) {
 
-		if (nodeIndex > graph.getVertexCount()) {
+		if (nodeIndex > graph.getVertexCount() && isRunning) {
 			// System.out.println("!!! Znaleziono masymalna kilke : " +
 			// printClique(maximalClique));
 			// TODO [bbarczynski] sprawdzenie czy dodajemy druga taka sama klike
@@ -193,7 +202,7 @@ public class MaximumClique<V, E> {
 	}
 
 	public String printClique(Collection<V> clique) {
-		return "(" + clique.size() + ")" + clique.toString();
+		return "Rozmiar: " + clique.size() + " | Wierzcho³ki: " + clique.toString();
 	}
 
 	private void findMaximumCliques() {
