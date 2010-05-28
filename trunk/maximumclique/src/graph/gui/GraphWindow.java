@@ -18,6 +18,7 @@ import graph.util.Node;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -61,7 +62,7 @@ public class GraphWindow extends JFrame implements ActionListener {
 
 		public MaximumClique<Node, Edge> doInBackground() {
 			MaximumClique<Node, Edge> mc = new MaximumClique<Node, Edge>(graph);
-			maximumCliques = new MaximumClique<Node, Edge>(graph).getCliques();
+			maximumCliques = mc.getCliques();
 			return mc;
 		}
 
@@ -79,13 +80,15 @@ public class GraphWindow extends JFrame implements ActionListener {
 					console.append("\t" + mc.printClique(clique) + newline);
 				}
 				console.append("Czas wykonania algorytmu: "
-						+ mc.getAlgorithmDuration());
+						+ mc.getAlgorithmDuration().divide(BigInteger.valueOf(1000000)) + "ms");
 				center.add(vv);
 				center.revalidate();
 				repaint();
 				end = cliquesSize - 1;
 				if (cliquesSize != 1)
 					next.setEnabled(true);
+				else
+					next.setEnabled(false);
 				stop.setEnabled(false);
 			} catch (InterruptedException ex) {
 				ex.printStackTrace();
