@@ -211,7 +211,10 @@ public class GraphWindow extends JFrame implements ActionListener {
 				console.append("Wybrano: " + file.getAbsolutePath() + newline);
 				UndirectedGraphReader reader = new UndirectedGraphReader();
 				graph = reader.load(file.getPath());
-				start.setEnabled(true);
+				if (graph == null)
+					console.append("Wybrano z³y format pliku!");
+				else
+					start.setEnabled(true);
 			}
 		}
 		if (e.getActionCommand().equals("Stop")) {
