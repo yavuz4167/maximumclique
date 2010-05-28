@@ -16,37 +16,18 @@ import graph.util.Node;
 public class UndirectedGraphReader extends MatrixFile<Node, Edge> {
 	public UndirectedGraphReader() {
 		super(null, new UndirectedGraphFactory(), new NodeFactory(), new EdgeFactory());
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
-	public Graph<Node, Edge> load(String arg0) {
-		// TODO [bbarczynski] weryfikajca czy graf jest na pewno nie skierowany,
-		// 1 po i nad przekatna
-
-		return super.load(arg0);
+	public Graph<Node, Edge> load(String file) {
+		try {
+			Graph<Node, Edge> g = super.load(file);
+			return g;
+		}
+		catch (Exception e) {
+			return null;
+		}
+		
 	}
 
 }
-
-// UndirectedSparseGraph<V, E> load(String fileName) {
-//
-// MatrixFile mf = new MatrixFile<V, E>(null, new
-// Factory<UndirectedSparseGraph<V, E>>() {
-//
-// @Override
-// public UndirectedSparseGraph<V, E> create() {
-// return new UndirectedSparseGraph<V, E>();
-// }
-// }, new NodeFactory(), new EgdeFactory());
-//
-// Graph<V, E> graph = mf.load(fileName);
-// // TODO [bbarczynski] weryfikacja czy graf jest nieskierowany, czyli pod
-// // i nad przekatna sa takie same 1
-//
-// return graph;
-// }
-
-// TODO [bbarczynski]
-// save()
-
