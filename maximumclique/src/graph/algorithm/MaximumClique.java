@@ -46,12 +46,12 @@ public class MaximumClique<V, E> {
 	 * kostruktorze) oraz czas wykonania samego algorytmu
 	 */
 	private BigInteger algorithmDuration;
-	
+
 	/**
-	 * Zmienna na przerwanie obliczeñ
+	 * Zmienna na przerwanie obliczeï¿½
 	 */
 	private static boolean isRunning = true;
-	
+
 	/**
 	 * 
 	 * @param graph
@@ -79,7 +79,7 @@ public class MaximumClique<V, E> {
 	public BigInteger getAlgorithmDuration() {
 		return algorithmDuration;
 	}
-	
+
 	public static void setRunning(boolean b) {
 		isRunning = b;
 	}
@@ -94,7 +94,9 @@ public class MaximumClique<V, E> {
 			maximalCliques.add(maximalClique);
 			return;
 		}
+
 		V node = nodes.get(nodeIndex - 1);
+		// V node = nodeMap.get(nodeIndex);
 		// System.out.println(getPrefix(node) + "maximalClique=" +
 		// maximalClique.toString());
 		Collection<V> neighbors = graph.getNeighbors(node);
@@ -181,7 +183,8 @@ public class MaximumClique<V, E> {
 	private HashSet<V> getLexicographicallySmallestMaximalClique(Collection<V> clique, Integer maxIndex) {
 		HashSet<V> lexiClique = cloneSet(clique);
 		for (int i = 1; i <= maxIndex; ++i) {
-			V node = nodes.get(i);
+			V node = nodes.get(i - 1);
+			// V node = nodeMap.get(i);
 			Collection<V> neighbors = graph.getNeighbors(node);
 			// mozna dolaczyc nowy wierzcholek gdy sasiedzi Vi zawieraja
 			// wszystkie wierzcholki z kliki. Czyli po dolaczenieu Vi ciagle
@@ -203,7 +206,7 @@ public class MaximumClique<V, E> {
 	}
 
 	public String printClique(Collection<V> clique) {
-		return "Rozmiar: " + clique.size() + " | Wierzcho³ki: " + clique.toString();
+		return "Rozmiar: " + clique.size() + " | WierzchoÅ‚ki: " + clique.toString();
 	}
 
 	private void findMaximumCliques() {
