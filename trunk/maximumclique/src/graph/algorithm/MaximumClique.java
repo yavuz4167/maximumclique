@@ -87,43 +87,20 @@ public class MaximumClique<V, E> {
 	private void TIAS(HashSet<V> maximalClique, Integer nodeIndex) {
 
 		if (nodeIndex > graph.getVertexCount() && isRunning) {
-			// System.out.println("!!! Znaleziono masymalna kilke : " +
-			// printClique(maximalClique));
-			// TODO [bbarczynski] sprawdzenie czy dodajemy druga taka sama klike
-			// maksylana
 			maximalCliques.add(maximalClique);
 			return;
 		}
 		V node = nodes.get(nodeIndex - 1);
-		// System.out.println(getPrefix(node) + "maximalClique=" +
-		// maximalClique.toString());
 		Collection<V> neighbors = graph.getNeighbors(node);
 		if (neighbors.containsAll(maximalClique)) {
-			// System.out.println(getPrefix(node) + "maximalClique zawiera sie w
-			// neighbors");
 			TIAS(cloneSetAndAddNode(maximalClique, node), nodeIndex + 1);
 		} else {
-			// System.out.println(getPrefix(node) + "maximalClique - brak
-			// zawierania");
 			TIAS(cloneSet(maximalClique), nodeIndex + 1);
 
-			// System.out.println(getPrefix(node) + "maximalClique=" +
-			// maximalClique);
-			// System.out.println(getPrefix(node) + "neighbors=" + neighbors);
 			HashSet<V> intersection = getIntersection(neighbors, maximalClique);
-			// System.out.println(getPrefix(node) + "intersection=" +
-			// intersection);
-
 			Collection<V> lexiClique = getLexicographicallySmallestMaximalClique(intersection, nodeIndex - 1);
-			// System.out.println(getPrefix(node) + "lexiClique=" + lexiClique);
 			if (maximalClique.equals(lexiClique)) {
-				// System.out.println(getPrefix(node)
-				// + "lexiClique jest rowne maximalClique. Rekurencja zostaje
-				// rozdwojona.");
 				TIAS(cloneSetAndAddNode(intersection, node), nodeIndex + 1);
-			} else {
-				// System.out.println(getPrefix(node) + "lexiClique jest rozne
-				// od maximalClique ");
 			}
 
 		}
@@ -179,6 +156,7 @@ public class MaximumClique<V, E> {
 	 * @return
 	 */
 	private HashSet<V> getLexicographicallySmallestMaximalClique(Collection<V> clique, Integer maxIndex) {
+
 		HashSet<V> lexiClique = cloneSet(clique);
 		for (int i = 1; i <= maxIndex; ++i) {
 			V node = nodes.get(i - 1);
