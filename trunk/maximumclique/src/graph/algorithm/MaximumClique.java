@@ -204,7 +204,7 @@ public class MaximumClique<V, E> {
 
 
         public String printClique(Collection<V> clique) {
-                return "Rozmiar: " + clique.size() + " | Wierzcho³ki: " + clique.toString();
+                return "Rozmiar: " + clique.size() + " | Wierzchołki: " + clique.toString();
         }
 
         private void findMaximumCliques() {
