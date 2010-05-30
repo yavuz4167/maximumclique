@@ -48,6 +48,7 @@ import graph.util.Node;
  * @author Mateusz
  * 
  */
+@SuppressWarnings("serial")
 public class GraphWindow extends JFrame implements ActionListener {
 	// Static variables
 	private static final Color defaultCliequeEgdeColor = Color.ORANGE;
@@ -98,9 +99,9 @@ public class GraphWindow extends JFrame implements ActionListener {
 				vv = visualize();
 				int cliquesSize = maximumCliques.size();
 				if (cliquesSize == 1)
-					console.setText("Znaleziono 1 największą klikę:");
+					console.setText("Znaleziono 1 największą klikę:" + newline);
 				else
-					console.setText("Znaleziono " + cliquesSize + " największych klik:" + newline);
+					console.setText("Znaleziono " + cliquesSize + " największe kliki:" + newline);
 				for (Set<Node> clique : maximumCliques) {
 					console.append("\t" + mc.printClique(clique) + newline);
 				}
@@ -182,7 +183,7 @@ public class GraphWindow extends JFrame implements ActionListener {
 	private BasicVisualizationServer<Node, Edge> visualize() {
 		cliqueEgdeColor = new ArrayList<Transformer<Edge, Paint>>();
 		cliqueVertexColor = new ArrayList<Transformer<Node, Paint>>();
-		Layout<Node, Edge> layout = new CircleLayout(graph);
+		Layout<Node, Edge> layout = new CircleLayout<Node, Edge>(graph);
 		layout.setSize(new Dimension(800, 600));
 		BasicVisualizationServer<Node, Edge> vv = new BasicVisualizationServer<Node, Edge>(layout);
 		vv.setBackground(Color.white);
