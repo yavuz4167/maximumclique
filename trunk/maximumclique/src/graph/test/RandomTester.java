@@ -25,7 +25,7 @@ public class RandomTester {
 	/**
 	 * Wielkość grafu - licza wierzchołków
 	 */
-	private int numVertices;
+	private int numVertex;
 
 	/**
 	 * Gęstość grafu - prawodpodobieństawo połaczenia krawędzią dowolnej pary
@@ -50,7 +50,7 @@ public class RandomTester {
 
 	/**
 	 * 
-	 * @param numVertices
+	 * @param numVertex
 	 *            Wielkość grafu - ilość wierzchołków w grafie
 	 * @param probability
 	 *            Gęstość grafu - prawodpodobieństawo połączenia krawędzią
@@ -58,14 +58,14 @@ public class RandomTester {
 	 * @param numIteration
 	 *            ilość powtórzeń uruchomienie algorytmu
 	 */
-	public RandomTester(int numVertices, double probability, int numIteration) {
+	public RandomTester(int numVertex, double probability, int numIteration) {
 		super();
-		this.numVertices = numVertices;
+		this.numVertex = numVertex;
 		this.probability = probability;
 		this.numIteration = numIteration;
 
 		generator = new ErdosRenyiGenerator<Node, Edge>(new UndirectedGraphFactory(), new NodeFactory(),
-				new EdgeFactory(), numVertices, probability);
+				new EdgeFactory(), numVertex, probability);
 		times = new ArrayList<BigInteger>(numIteration);
 
 	}
@@ -75,32 +75,32 @@ public class RandomTester {
 	 * 
 	 * @return sredni czas wykonania algorytmu (dla jedngo grafu)
 	 */
-	public double run() {
+	public BigInteger run() {
 		times.clear();
 		for (int i = 0; i < numIteration; ++i) {
 			Graph<Node, Edge> graph = generator.create();
 			MaximumClique<Node, Edge> algorithm = new MaximumClique<Node, Edge>(graph);
 			algorithm.getCliques();
-			// System.out.println("Duration(n=" + numVertices + ", p=" +
+			// System.out.println("Duration(n=" + numVertex + ", p=" +
 			// probability + ") [" + i + "]="
 			// + algorithm.getAlgorithmDuration());
 			times.add(algorithm.getAlgorithmDuration());
 		}
-		return getAverageTime();
+		return getAverageTimeForGraph();
 	}
 
 	/**
 	 * 
 	 * @return sredni czas wykonania algorytmu (dla jedngo grafu)
 	 */
-	public double getAverageTime() {
+	public BigInteger getAverageTimeForGraph() {
 		BigInteger sum = BigInteger.ZERO;
-		double everage = 0;
+		BigInteger everage = BigInteger.ZERO;
 		for (BigInteger singleTime : times) {
 			sum = sum.add(singleTime);
 		}
 		if (numIteration > 0)
-			everage = sum.divide(BigInteger.valueOf(numIteration)).doubleValue();
+			everage = sum.divide(BigInteger.valueOf(numIteration));
 		return everage;
 	}
 
