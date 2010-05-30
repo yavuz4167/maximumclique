@@ -140,7 +140,7 @@ public class MaximumClique<V, E> {
 	 * @return
 	 */
 	private HashSet<V> cloneSetAndAddNode(Collection<V> set, V node) {
-		HashSet<V> clone = new HashSet<V>(set);
+		HashSet<V> clone = cloneSet(set);
 		clone.add(node);
 		return clone;
 	}
