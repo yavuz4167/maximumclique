@@ -29,10 +29,10 @@ public class MaximumClique<V, E> {
 	private Graph<V, E> graph;
 
 	/**
-	 * Lista wierzchołków. Jest niezbędna aby pobierać poszczególne
-	 * wierzchołki po indexie. Graph#getVertices() zwraca kolekcję, po której
-	 * można się jedynie iterować, a nie jest możliwe pobranie elementu z
-	 * wybranego indexu.
+	 * Lista wierzchołków. Jest niezbędna aby pobierać poszczególne wierzchołki
+	 * po indexie. Graph#getVertices() zwraca kolekcję, po której można się
+	 * jedynie iterować, a nie jest możliwe pobranie elementu z wybranego
+	 * indexu.
 	 */
 	private ArrayList<V> nodes;
 
@@ -42,7 +42,7 @@ public class MaximumClique<V, E> {
 	private List<Set<V>> maximalCliques;
 
 	/**
-	 * Czas trwania algorytmu. Sumowa są czynności przygotowawcze (wykonane w
+	 * Czas trwania algorytmu. Sumowa są czynności przygotowawcze (wykonane w
 	 * kostruktorze) oraz czas wykonania samego algorytmu
 	 */
 	private BigInteger algorithmDuration;
@@ -84,8 +84,16 @@ public class MaximumClique<V, E> {
 		isRunning = b;
 	}
 
+	/**
+	 * Algorytm wyszykiwania maksymalnych klik w grafie. Uruchamiać: TIAS(new
+	 * HashSet<V>(), 1);
+	 * 
+	 * @param maximalClique
+	 *            aktulana maksymalana klika
+	 * @param nodeIndex
+	 *            numer analizowane wierzchołka
+	 */
 	private void TIAS(HashSet<V> maximalClique, Integer nodeIndex) {
-
 		if (nodeIndex > graph.getVertexCount() && isRunning) {
 			maximalCliques.add(maximalClique);
 			return;
@@ -102,9 +110,7 @@ public class MaximumClique<V, E> {
 			if (maximalClique.equals(lexiClique)) {
 				TIAS(cloneSetAndAddNode(intersection, node), nodeIndex + 1);
 			}
-
 		}
-
 	}
 
 	/**

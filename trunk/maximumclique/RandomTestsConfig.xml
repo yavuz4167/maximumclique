@@ -1,7 +1,7 @@
 <graph.test.MassRandomTester>
   <numIteration>5</numIteration>
   <numVertexList class="list">
-	<!-- <int>5</int>
+<!--	<int>5</int>
 	<int>10</int>
 	-->
 	<int>15</int>
@@ -10,27 +10,30 @@
     <int>30</int>
 
 	<int>35</int>
-<!--
+
 	<int>40</int> 
 	
 	<int>45</int> 
 	<int>50</int> 
-	<int>55</int> 
--->
+	<!--<int>55</int> 
+	<int>60</int>  -->
+	<!--<int>65</int> 
+	<int>70</int>  -->
+
   </numVertexList>
   <probabilityList class="list">
-	<double>0.1</double>
+	<!--<double>0.1</double>
 	<double>0.2</double>	
 	<double>0.3</double>
 	<double>0.4</double>
 	<double>0.5</double>
-    <double>0.6</double>
+    <double>0.6</double> -->
 	<double>0.7</double>
-   <double>0.8</double> 
-   <!-- <double>0.85</double> -->
-  <double>0.9</double> 
-    <!-- <double>0.95</double> -->
-    <double>0.99</double>
+  <double>0.8</double>
+   <double>0.85</double> 
+  <double>0.9</double>  
+    <double>0.95</double> 
+    <double>0.99</double> 
   </probabilityList>
   <times/>
 </graph.test.MassRandomTester>
