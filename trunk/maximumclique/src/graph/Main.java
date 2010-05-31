@@ -1,10 +1,9 @@
-package test.bartek;
+package graph;
 
 import graph.gui.GraphWindow;
 import graph.gui.RadomTestsWindow;
 
-public class testing {
-
+public class Main {
 	/**
 	 * @param args
 	 * 
@@ -15,4 +14,5 @@ public class testing {
 		else if (args[0].equalsIgnoreCase("randomtest"))
 			new RadomTestsWindow();
 	}
+
 }
